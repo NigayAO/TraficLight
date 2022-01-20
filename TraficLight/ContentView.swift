@@ -12,14 +12,14 @@ enum TrafficColor {
 }
 
 struct ContentView: View {
-    
     @State private var title = "START"
     @State private var redOpacity = 0.3
     @State private var yellowOpacity = 0.3
     @State private var greenOpacity = 0.3
+    @State private var currentColor = TrafficColor.red
+    
     private let isOn = 1.0
     private let isOff = 0.3
-    @State private var currentColor = TrafficColor.red
     
     var body: some View {
         ZStack {
@@ -34,21 +34,7 @@ struct ContentView: View {
                     .opacity(greenOpacity)
                 Spacer()
                 Button {
-                    title = "NEXT"
-                    switch currentColor {
-                    case .red:
-                        redOpacity = isOn
-                        greenOpacity = isOff
-                        currentColor = .yellow
-                    case .yellow:
-                        yellowOpacity = isOn
-                        redOpacity = isOff
-                        currentColor = .green
-                    case .green:
-                        greenOpacity = isOn
-                        yellowOpacity = isOff
-                        currentColor = .red
-                    }
+                    switchColor()
                 } label: {
                     setButtonLabel
                 }
@@ -64,6 +50,24 @@ struct ContentView: View {
                 .font(.system(size: 30))
                 .fontWeight(.bold)
                 .foregroundColor(.white)
+        }
+    }
+    
+    private func switchColor() {
+        title = "NEXT"
+        switch currentColor {
+        case .red:
+            redOpacity = isOn
+            greenOpacity = isOff
+            currentColor = .yellow
+        case .yellow:
+            yellowOpacity = isOn
+            redOpacity = isOff
+            currentColor = .green
+        case .green:
+            greenOpacity = isOn
+            yellowOpacity = isOff
+            currentColor = .red
         }
     }
 }
@@ -82,6 +86,5 @@ struct SetupButton: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .previewDevice("iPhone 11")
     }
 }
